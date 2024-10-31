@@ -15,12 +15,12 @@
     <!-- Inicio Destaque topo do site-->
     <div class="destaque">
         <!--Inicio navBar-->
-        <nav name="navBar"id="navBar">
+        <nav name="navBar" id="navBar">
             <ul class="navlinks">
-                <li><ion-icon name="home-outline"></ion-icon></li>
-                <li><ion-icon name="heart-outline"></ion-icon></li>
-                <li><ion-icon name="chatbubble-ellipses-outline"></ion-icon></li>
-                <li><ion-icon name="person-outline"></ion-icon></li>
+                <li><a href="inicio.php"><ion-icon name="home-outline"></ion-icon></a></li>
+                <li><a href="cadastro.php"><ion-icon name="add-outline"></ion-icon></a></li>
+                <li><a href="#"><ion-icon name="chatbubble-ellipses-outline"></ion-icon></a></li>
+                <li><a href="#"><ion-icon name="person-outline"></ion-icon></a></li>
             </ul>
         </nav>
         <!--Fim navBar-->

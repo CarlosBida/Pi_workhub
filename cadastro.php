@@ -13,17 +13,14 @@
     <div class="msg-1">Diga-nos mais sobre o seu espaço!</div>
 
     <form action="process_form.php" method="POST" enctype="multipart/form-data">
+        
         <div class="form-control">
-            <label class="placeholder">Tipo</label>
-            <input type="text" name="tipo" required>
+            <label class="placeholder">Nome do espaço</label>
+            <input type="text" name="nome" required>
         </div>
         <div class="form-control">
             <label class="placeholder">Valor</label>
             <input type="number" name="valor" required>
-        </div>
-        <div class="form-control">
-            <label class="placeholder">Nome do espaço</label>
-            <input type="text" name="nome" required>
         </div>
         <div class="form-control">
             <label class="placeholder">Localização</label>
@@ -37,10 +34,6 @@
             <label class="placeholder">Imagens</label>
             <input type="file" name="imagens[]" multiple required>
         </div>
-
-        <div class="drag-and-drop-field">
-            <div class="label-text">Envie as fotos de sua propriedade</div>
-        </div>
         <div class="button">
             <input type="submit" value="Cadastrar" style="display:none;">
             Cadastrar
@@ -49,10 +42,10 @@
 
     <nav name="navBar" id="navBar">
         <ul class="navlinks">
-            <li><ion-icon name="home-outline"></ion-icon></li>
-            <li><ion-icon name="heart-outline"></ion-icon></li>
-            <li><ion-icon name="chatbubble-ellipses-outline"></ion-icon></li>
-            <li><ion-icon name="person-outline"></ion-icon></li>
+            <li><a href="inicio.php"><ion-icon name="home-outline"></ion-icon></a></li>
+            <li><a href="cadastro.php"><ion-icon name="add-outline"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="chatbubble-ellipses-outline"></ion-icon></a></li>
+            <li><a href="#"><ion-icon name="person-outline"></ion-icon></a></li>
         </ul>
     </nav>
 

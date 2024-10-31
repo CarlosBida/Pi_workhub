@@ -1,59 +1,77 @@
 * {
-    margin: 0;
+    margin: 2px;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Raleway', sans-serif;
 }
 
 body {
-    padding-bottom: 80px; /* Para evitar que o conteúdo fique atrás da nav */
+    padding-bottom: 80px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza o formulário */
+    align-items: center; 
 }
 
 nav {
     display: flex;
     background-color: var(--cor-padrao-fonte);
-    justify-content: space-between;
+    justify-content: space-around; 
     align-items: center;
     position: fixed;
     bottom: 0;
     width: 100%;
     border-radius: 30px;    
+    padding: 10px 0; 
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.navlinks {
+    display: flex; 
+    justify-content: space-around; 
+    width: 100%; 
 }
 
 .navlinks li {
-    display: inline-block;
     list-style: none;
-    margin: 25px;
-    padding-left: 10px;
+    margin: 0; 
+    padding: 0 15px; 
+}
+
+.navlinks li a {
+    text-decoration: none; 
+    color: inherit; 
+    display: flex; 
+    align-items: center; 
 }
 
 .navlinks li ion-icon {
     font-size: 33px;
 }
 
+.navlinks li a:hover ion-icon {
+    color: #008f17; 
+}
+
 .info-1 {
     color: var(--primeraly-black, #383c3e);
-    text-align: center; /* Centraliza o texto */
+    text-align: center; 
     font-family: "Inter-Bold", sans-serif;
     font-size: 31px;
     line-height: 160%;
     letter-spacing: 0.2px;
     font-weight: 700;
-    margin: 20px 0; /* Margem para separar do topo */
+    margin: 20px 0; 
 }
 
 .msg-1 {
     color: var(--greyline, #737b7d);
-    text-align: center; /* Centraliza o texto */
+    text-align: center; 
     font-family: "Inter-Regular", sans-serif;
     font-size: 14px;
     line-height: 160%;
     letter-spacing: 0.3px;
     font-weight: 400;
-    margin-bottom: 20px; /* Margem para separar da mensagem */
+    margin-bottom: 20px; 
 }
 
 .form-control {
@@ -81,12 +99,12 @@ input[type="file"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-top: 5px;
-    height: 40px; /* Define altura adequada para campos de texto */
+    height: 40px; 
 }
 
 textarea {
-    resize: none;  /* Remove a opção de redimensionar */
-    height: 60px;  /* Define altura fixa para a área de texto */
+    resize: none;  
+    height: 60px;  
 }
 
 .drag-and-drop-field {
@@ -102,14 +120,14 @@ textarea {
 }
 
 .button {
-    background: var(--primeraly-green, #008f17);
+    background: var(--primeraly-green, #4EDB71);
     border-radius: 7px;
     padding: 16px;
     width: 82%;
     margin: 10px auto;
     text-align: center;
     color: #ffffff;
-    font-family: "Inter-Medium", sans-serif;
-    font-size: 14px;
+    font-size: 25px;
+    
     cursor: pointer;
 }

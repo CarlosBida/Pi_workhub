@@ -1,6 +1,8 @@
 
 .login,
 .login * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 .login {
@@ -43,6 +45,7 @@
 }
 
 .insira-seu-email :placeholder-shown{
+    padding-left: 10px;
     color: #6c6a6a;
     font-size: 15px;
 }
@@ -51,6 +54,7 @@
     outline: none;
     border-radius: 8px;
     border-style: solid;
+    padding-left: 10px;
     border-color: #6c6a6a;
     width: 320px;
     height: 45px;
@@ -59,21 +63,21 @@
     top: 353px;
 }
 .botao-login {
-    background: #4edb71; /* Cor de fundo */
-    border-radius: 8px; /* Bordas arredondadas */
-    width: 328px; /* Largura do botão */
-    height: 48px; /* Altura do botão */
-    position: absolute; /* Posição absoluta */
-    left: 26px; /* Distância da esquerda */
-    top: 447px; /* Distância do topo */
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1); /* Sombra */
-    color: white; /* Cor do texto */
-    border: none; /* Sem borda */
-    font-size: 16px; /* Tamanho da fonte */
-    cursor: pointer; /* Cursor em forma de mão ao passar sobre o botão */
+    background: #4edb71;
+    border-radius: 8px; 
+    width: 328px; 
+    height: 48px; 
+    position: absolute; 
+    left: 26px; 
+    top: 447px; 
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1); 
+    color: white; 
+    border: none; 
+    font-size: 16px; 
+    cursor: pointer; 
 }
 .botao-login:hover {
-    background: #45c65f; /* Mudança de cor ao passar o mouse */
+    background: #45c65f; 
 }
 .social_1, .social_2, .social_3 {
     background: #ffffff;
@@ -82,10 +86,10 @@
     height: 48px;
     position: absolute;
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
-    display: flex; /* Para alinhar a imagem e o texto */
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
-    cursor: pointer; /* Cursor em forma de mão ao passar sobre o botão */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
 }
 .social_1 {
     left: 54px;
@@ -100,9 +104,9 @@
     top: 580px;
 }
 .social_login img {
-    width: 24px; /* Largura da imagem */
-    height: 24px; /* Altura da imagem */
-    margin-right: 4px; /* Espaço entre a imagem e o texto */
+    width: 24px; 
+    height: 24px; 
+    margin-right: 4px; 
 }
 .rectangle-192 {
     border-radius: 8px;
