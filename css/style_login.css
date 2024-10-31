@@ -1,0 +1,220 @@
+
+.login,
+.login * {
+    box-sizing: border-box;
+}
+.login {
+    background: #ffffff;
+    height: 844px;
+    position: relative;
+    overflow: hidden;
+}
+.ellipse-48 {
+    background: #4edb71;
+    border-radius: 50%;
+    opacity: 0.2;
+    width: 445px;
+    height: 406px;
+    position: absolute;
+    left: -37px;
+    top: -210px;
+}
+.ellipse-47 {
+    background: #0cbc8b;
+    border-radius: 50%;
+    opacity: 0.2;
+    width: 342px;
+    height: 342px;
+    position: absolute;
+    left: 207px;
+    top: -175px;
+}
+
+.insira-seu-email input{
+    outline: none;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: #6c6a6a;
+    width: 320px;
+    height: 45px;
+    position: absolute;
+    left: 26px;
+    top: 294px;
+}
+
+.insira-seu-email :placeholder-shown{
+    color: #6c6a6a;
+    font-size: 15px;
+}
+
+.insira-sua-senha input {
+    outline: none;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: #6c6a6a;
+    width: 320px;
+    height: 45px;
+    position: absolute;
+    left: 26px;
+    top: 353px;
+}
+.botao-login {
+    background: #4edb71; /* Cor de fundo */
+    border-radius: 8px; /* Bordas arredondadas */
+    width: 328px; /* Largura do botão */
+    height: 48px; /* Altura do botão */
+    position: absolute; /* Posição absoluta */
+    left: 26px; /* Distância da esquerda */
+    top: 447px; /* Distância do topo */
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1); /* Sombra */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor em forma de mão ao passar sobre o botão */
+}
+.botao-login:hover {
+    background: #45c65f; /* Mudança de cor ao passar o mouse */
+}
+.social_1, .social_2, .social_3 {
+    background: #ffffff;
+    border-radius: 8px;
+    width: 75px;
+    height: 48px;
+    position: absolute;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
+    display: flex; /* Para alinhar a imagem e o texto */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    cursor: pointer; /* Cursor em forma de mão ao passar sobre o botão */
+}
+.social_1 {
+    left: 54px;
+    top: 580px;
+}
+.social_2{
+    left: 149px;
+    top: 580px;
+}
+.social_3 {
+    left: 244px;
+    top: 580px;
+}
+.social_login img {
+    width: 24px; /* Largura da imagem */
+    height: 24px; /* Altura da imagem */
+    margin-right: 4px; /* Espaço entre a imagem e o texto */
+}
+.rectangle-192 {
+    border-radius: 8px;
+    border-style: solid;
+    border-color: #6c6a6a;
+    border-width: 0.6px;
+    width: 328px;
+    height: 48px;
+    position: absolute;
+    left: 26px;
+    top: 353px;
+}
+
+
+.login2 {
+    color: #ffffff;
+    text-align: left;
+    font-family: "Outfit-Regular", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    position: absolute;
+    left: 167px;
+    top: 459px;
+}
+.fa-a-o-seu-login {
+    color: #000000;
+    text-align: left;
+    font-family: "Outfit-SemiBold", sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    position: absolute;
+    left: 22px;
+    top: 67px;
+}
+.bem-vindo-de-volta-ao {
+    color: #111111;
+    text-align: left;
+    font-family: "Outfit-Regular", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    position: absolute;
+    left: 23px;
+    top: 96px;
+}
+.esqueceu-sua-senha {
+    text-decoration: none;
+    color: #000000;
+    text-align: left;
+    font-family: "Outfit-Regular", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    position: absolute;
+    left: 230px;
+    top: 405px;
+}
+
+.ou-logue-com {
+    color: #757171;
+    text-align: left;
+    font-family: "Outfit-Regular", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    position: absolute;
+    left: 154px;
+    top: 530px;
+}
+
+.cadastrar {
+    text-align: left;
+    font-family: "-", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    position: absolute;
+    left: 91px;
+    top: 681px;
+}
+.cadastrar-span {
+    color: #636363;
+    font-family: "Outfit-Regular", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+}
+.cadastrar-link {
+    text-decoration: none;
+    color: #0c1f22;
+    font-family: "Outfit-SemiBold", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.user {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    left: 205px;
+    top: 70px;
+}
+.user2 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    right: 0%;
+    left: 0%;
+    bottom: 0%;
+    top: 0%;
+    overflow: visible;
+}
+.logo {
+    width: 304px;
+    height: auto;
+    position: absolute;
+    left: 53px;
+    top: 57px;
+    object-fit: cover;
+}

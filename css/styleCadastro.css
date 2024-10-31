@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+
+body {
+    padding-bottom: 80px; /* Para evitar que o conteúdo fique atrás da nav */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o formulário */
+}
+
+nav {
+    display: flex;
+    background-color: var(--cor-padrao-fonte);
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-radius: 30px;    
+}
+
+.navlinks li {
+    display: inline-block;
+    list-style: none;
+    margin: 25px;
+    padding-left: 10px;
+}
+
+.navlinks li ion-icon {
+    font-size: 33px;
+}
+
+.info-1 {
+    color: var(--primeraly-black, #383c3e);
+    text-align: center; /* Centraliza o texto */
+    font-family: "Inter-Bold", sans-serif;
+    font-size: 31px;
+    line-height: 160%;
+    letter-spacing: 0.2px;
+    font-weight: 700;
+    margin: 20px 0; /* Margem para separar do topo */
+}
+
+.msg-1 {
+    color: var(--greyline, #737b7d);
+    text-align: center; /* Centraliza o texto */
+    font-family: "Inter-Regular", sans-serif;
+    font-size: 14px;
+    line-height: 160%;
+    letter-spacing: 0.3px;
+    font-weight: 400;
+    margin-bottom: 20px; /* Margem para separar da mensagem */
+}
+
+.form-control {
+    background: #f2f3f3;
+    border-radius: 7px;
+    width: 82%;
+    margin: 10px auto;
+    padding: 10px;
+    position: relative;
+}
+
+.placeholder {
+    color: var(--dark-dark-2, #1a1e1e);
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    height: 40px; /* Define altura adequada para campos de texto */
+}
+
+textarea {
+    resize: none;  /* Remove a opção de redimensionar */
+    height: 60px;  /* Define altura fixa para a área de texto */
+}
+
+.drag-and-drop-field {
+    border-radius: 7px;
+    border: 1px dashed var(--input-text, #8e8e8e);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 82%;
+    margin: 10px auto;
+}
+
+.button {
+    background: var(--primeraly-green, #008f17);
+    border-radius: 7px;
+    padding: 16px;
+    width: 82%;
+    margin: 10px auto;
+    text-align: center;
+    color: #ffffff;
+    font-family: "Inter-Medium", sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
