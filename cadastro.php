@@ -9,10 +9,11 @@
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
 </head>
 <body>
+    <div class="logo"><img src="img/Workhub logo.png"></div>
     <div class="info-1">Cadastre seu espaço</div>
     <div class="msg-1">Diga-nos mais sobre o seu espaço!</div>
 
-    <form action="process_form.php" method="POST" enctype="multipart/form-data">
+    <form action="#" method="POST" enctype="multipart/form-data">
         
         <div class="form-control">
             <label class="placeholder">Nome do espaço</label>
@@ -44,13 +45,12 @@
         <ul class="navlinks">
             <li><a href="inicio.php"><ion-icon name="home-outline"></ion-icon></a></li>
             <li><a href="cadastro.php"><ion-icon name="add-outline"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="chatbubble-ellipses-outline"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="person-outline"></ion-icon></a></li>
+            <li><a href="dashbord.php"><ion-icon name="grid-outline"></ion-icon></a></li>
+            <li><a href="perfil.php"><ion-icon name="person-outline"></ion-icon></a></li>
         </ul>
     </nav>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="assets/js/app.js"></script>
 </body>
 </html>

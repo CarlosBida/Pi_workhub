@@ -1,0 +1,151 @@
+*{
+  margin:2px;
+  padding:0px;
+  box-sizing: border-box;
+  font-family: 'raleway', sans-serif;
+  max-width: 390px;
+}
+
+nav {
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.9); 
+  justify-content: space-around; 
+  align-items: center;
+  position: fixed; 
+  bottom: 0;
+  width: 90%;
+  border-radius: 30px;    
+  padding: 10px 0; 
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+  z-index: 10; 
+}
+
+.navlinks {
+    display: flex; 
+    justify-content: space-around; 
+    width: 100%; 
+}
+
+.navlinks li {
+    list-style: none;
+    margin: 0; 
+    padding: 0 10px; 
+}
+
+.navlinks li a {
+    text-decoration: none; 
+    color: inherit; 
+    display: flex; 
+    align-items: center; 
+}
+
+.navlinks li ion-icon {
+    font-size: 33px;
+}
+.main-container {
+  position: relative;
+  width: 375px;
+  height: 812px;
+  margin: 0 auto;
+  font-size: 0px;
+  background: #f9f9f9;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.descricao {
+  display: block;
+  position: relative;
+  height: 27.098px;
+  margin: 339px 0 0 20px;
+  color: #000000;
+  font-family: Raleway, var(--default-font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18.784px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 8;
+}
+.estacao-trabalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+  width: 335px;
+  height: 51.344px;
+  margin: 8.557px 0 0 20px;
+  color: #848484;
+  font-family: Raleway, var(--default-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+  z-index: 9;
+}
+.image {
+  position: absolute;
+  width: 335px;
+  height: 305.348px;
+  top: 20px;
+  left: 20px;
+  background: url(./assets/images/b36d5926-4469-4857-abd3-3e4f107a28bc.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 2;
+  border-radius: 20px;
+}
+.ic-back {
+  position: relative;
+  width: 34px;
+  height: 34.151px;
+  margin: 20.089px 0 0 20px;
+  background: url(./assets/images/0c1a9cba-83ab-4cf9-af34-bb8bb8d35bfc.png)
+    no-repeat center;
+  background-size: cover;
+  z-index: 4;
+}
+.rectangle {
+  position: relative;
+  width: 194px;
+  height: 63.279px;
+  margin: 162.718px 0 0 3px;
+  cursor: pointer;
+  background: #4edb71;
+  border: none;
+  z-index: 3;
+  border-radius: 30px;
+}
+.hair-beleza {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  height: 38.169px;
+  top: 5.022px;
+  left: 22px;
+  color: #ffffff;
+  font-family: Poppins, var(--default-font-family);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 5;
+}
+.av-jardim-das-flores {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  height: 18.08px;
+  top: 32.142px;
+  left: 22px;
+  color: #ffffff;
+  font-family: Poppins, var(--default-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 6;
+}

@@ -1,0 +1,158 @@
+*{
+  margin:2px;
+  padding:0px;
+  box-sizing: border-box;
+  font-family: 'raleway', sans-serif;
+  max-width: 390px;
+}
+body {
+  padding-bottom: 0px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+nav {
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.9); 
+  justify-content: space-around; 
+  align-items: center;
+  position: fixed; 
+  bottom: 0;
+  width: 90%;
+  border-radius: 30px;    
+  padding: 10px 0; 
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+  z-index: 10; 
+}
+
+.navlinks {
+  display: flex; 
+  justify-content: space-around; 
+  width: 100%; 
+}
+
+.navlinks li {
+  list-style: none;
+  margin: 0; 
+  padding: 0 10px; 
+}
+
+.navlinks li a {
+  text-decoration: none; 
+  color: inherit; 
+  display: flex; 
+  align-items: center; 
+}
+
+.navlinks li ion-icon {
+  font-size: 33px;
+}
+
+.rectangle-7 {
+  background: #ffffff;
+  border-radius: 10px;
+  width: 159px;
+  height: 103px;
+  position: absolute;
+  left: 25px;
+  top: 149px;
+}
+.notebook {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 144px;
+  top: 165px;
+  overflow: visible;
+}
+.subtract {
+  width: 119.15px;
+  height: 103px;
+  position: absolute;
+  left: 25px;
+  top: 149px;
+  overflow: visible;
+}
+.agenda {
+  color: var(--colors-neutral-05, #fbfbfb);
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  position: absolute;
+  left: 41px;
+  top: 218px;
+  width: 54.39px;
+}
+._3 {
+  color: #000000;
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  position: absolute;
+  left: 151px;
+  top: 203px;
+}
+
+.rectangle-8 {
+  background: #ffffff;
+  border-radius: 10px;
+  width: 158px;
+  height: 103px;
+  position: absolute;
+  left: 192px;
+  top: 149px;
+}
+.subtract2 {
+  width: 119.15px;
+  height: 103px;
+  position: absolute;
+  left: 192px;
+  top: 149px;
+  overflow: visible;
+}
+
+.chart-alt {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 310px;
+  top: 165px;
+  overflow: visible;
+}
+.title {
+  color: var(--black, #000000);
+  text-align: left;
+  font-family: "Roboto-Bold", sans-serif;
+  font-size: 21px;
+  line-height: 110%;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+  position: absolute;
+  right: 28px;
+  left: 22px;
+  top: 332px;
+}
+.title2 {
+  color: #4edb71;
+  text-align: center;
+  font-family: "Poppins-SemiBold", sans-serif;
+  font-size: 20px;
+  line-height: 110%;
+  letter-spacing: 0.37px;
+  font-weight: 600;
+  position: absolute;
+  left: -7px;
+  top: 21px;
+  width: 160px;
+  height: 62px;
+}
+.work-removebg-preview-2 {
+  width: 180px;
+  height: 162px;
+  position: absolute;
+  left: 74px;
+  top: 12px;
+  object-fit: cover;
+}
