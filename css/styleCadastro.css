@@ -123,15 +123,22 @@ textarea {
     margin: 10px auto;
 }
 
-.button {
-    background: var(--primeraly-green, #4EDB71);
-    border-radius: 7px;
-    padding: 16px;
-    width: 82%;
-    margin: 10px auto;
-    text-align: center;
-    color: #ffffff;
-    font-size: 25px;
-    
-    cursor: pointer;
+.cadastrar {
+    text-align: center; /* Centraliza o conteúdo dentro do div */
+    margin-top: 20px; /* Espaçamento acima do botão */
+}
+
+.cadastrar button {
+    background-color: green; /* Fundo verde */
+    color: white; /* Letras brancas */
+    border: none; /* Remove bordas padrão */
+    border-radius: 25px; /* Cantos arredondados */
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor ao passar sobre o botão */
+    transition: background-color 0.3s; /* Efeito de transição */
+}
+
+.cadastrar button:hover {
+    background-color: darkgreen; /* Cor de fundo ao passar o mouse */
 }

@@ -11,9 +11,11 @@
 <body>
     <div class="logo"><img src="img/Workhub logo.png"></div>
     <div class="info-1">Cadastre seu espaço</div>
-    <div class="msg-1">Diga-nos mais sobre o seu espaço!</div>
+    <div class="msg-1">
+        <?php echo isset($_GET['message']) ? htmlspecialchars($_GET['message']) : 'Diga-nos mais sobre o seu espaço!'; ?>
+    </div>
 
-    <form action="#" method="POST" enctype="multipart/form-data">
+    <form action="inserirCadastro.php" method="POST" enctype="multipart/form-data">
         
         <div class="form-control">
             <label class="placeholder">Nome do espaço</label>
@@ -35,9 +37,8 @@
             <label class="placeholder">Imagens</label>
             <input type="file" name="imagens[]" multiple required>
         </div>
-        <div class="button">
-            <input type="submit" value="Cadastrar" style="display:none;">
-            Cadastrar
+        <div class="cadastrar">
+            <button type="submit">Cadastrar</button>
         </div>
     </form>
 

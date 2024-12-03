@@ -127,6 +127,32 @@ nav {
     right: 20px;
 
 }
+.lista-imoveis {
+    padding: 10px;
+}
+
+.lista-imoveis ul {
+    list-style-type: none; /* Remove marcadores da lista */
+    padding: 0;
+}
+
+.lista-imoveis li {
+    display: flex; /* Alinha a imagem e o texto lado a lado */
+    align-items: center; /* Centraliza verticalmente */
+    margin-bottom: 10px; /* Espaçamento entre os itens da lista */
+}
+
+.mini-imagem {
+    width: 50px; /* Largura da mini imagem */
+    height: 50px; /* Altura da mini imagem */
+    object-fit: cover; /* Corta a imagem para preencher o espaço */
+    border-radius: 10px; /* Cantos arredondados para a mini imagem */
+    margin-right: 10px; /* Espaçamento à direita da imagem */
+}
+
+.descricao {
+    flex-grow: 1; /* Faz a descrição ocupar o espaço restante */
+}
 .carousel-container {
     width: 100%; /* Largura total para dispositivos móveis */
     overflow: hidden;
@@ -149,7 +175,7 @@ nav {
 }
 
 .slide {
-    flex: 0 0 auto; /* Tamanho flexível dos slides */
+    flex: 0 0 200px; /* Tamanho flexível dos slides */
     width: 70%; /* Largura dos slides */
     margin-right: 10px; /* Espaço entre os slides */
     position: relative;
@@ -157,8 +183,8 @@ nav {
 }
 
 .slide img {
-    width: 100%;
-    height: auto;
+    width: 200px;
+    height: 200px;
     border-radius: 10px;
 }
 

@@ -5,17 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workhub</title>
     <link rel="stylesheet" href="css/style.css">
-     <!-- Favicon -->
-     <link href="img/favicon.ico" rel="icon">
-     <!-- Fonte -->
-     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
-
+    <link href="img/favicon.ico" rel="icon">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
 </head>
 <body>
-    <!-- Inicio Destaque topo do site-->
     <div class="destaque">
-        
-        <!--Inicio container superior-->
         <div class="container-sup">
             <img src="img/Workhub logo.png" alt="LOCAHUB" class="logo">
             <h3>Local</h3>
@@ -24,8 +18,7 @@
                 <h1>Telêmaco</h1>
             </div>
         </div>
-        <!--Fim container superior-->
-        <!--Inicio busca-->
+
         <div class="busca-site">
             <form action="#" method="post">
                 <div class="input">
@@ -37,37 +30,75 @@
                 </div>
             </form>
         </div>
-        <!--Fim busca-->
 
-        <!--Incio corpo do menu-->
         <div class="carousel-container">
             <a href="#"><span>Ver Mais</span></a>   
             <h2>O lugar certo para você</h2>
             <div class="carousel">
-                <div class="slide">
-                    <img src="img/casa-1.png" alt="Imóvel 1">
-                    <div class="info">
-                        <h3>HAIR BELEZA </h3>
-                        <p>R$ 100.000</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="img/casa-2.png" alt="Imóvel 2">
-                    <div class="info">
-                        <h3>Imóvel 2</h3>
-                        <p>R$ 150.000</p>
-                    </div>
-                </div>
-                <!-- Adicione mais slides conforme necessário -->
-            </div>
-            <div class="recomendado"></div>
-                <a href="#"><span>Ver Mais</span></a>   
-                <h2>Recomendados</h2>
-            <div class="carousel">
+                <?php
+                include 'conexaoBD.php'; // Inclui o arquivo de conexão
+
+                // Consulta para selecionar os espaços cadastrados
+                $sql = "SELECT nome, valor, localizacao, descricao, imagens FROM espacos";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Saída de dados de cada linha
+                    while ($row = $result->fetch_assoc()) {
+                        $imagens = json_decode($row['imagens']);
+                        $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png'; // Imagem padrão caso não tenha
+
+                        echo '<div class="slide">';
+                        echo '<img src="' . htmlspecialchars($imagem_principal) . '" alt="' . htmlspecialchars($row['nome']) . '">';
+                        echo '<div class="info">';
+                        echo '<h3>' . htmlspecialchars($row['nome']) . '</h3>';
+                        echo '<p>R$ ' . htmlspecialchars($row['valor']) . '</p>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p>Nenhum espaço cadastrado.</p>';
+                }
+
+                $conn->close(); // Fecha a conexão com o banco de dados
+                ?>
             </div>
         </div>
+        <!-- Lista de imóveis -->
+        <div class="lista-imoveis">
+            <h2>Imóveis Cadastrados</h2>
+            <ul>
+                <?php
+                include 'conexaoBD.php'; // Inclui o arquivo de conexão
+
+                // Consulta para selecionar os espaços cadastrados
+                $sql = "SELECT nome, valor, imagens FROM espacos";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Saída de dados de cada linha
+                    while ($row = $result->fetch_assoc()) {
+                        // Decodifica as imagens do formato JSON
+                        $imagens = json_decode($row['imagens']);
+                        $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png'; // Imagem padrão caso não tenha
+
+                        echo '<li>';
+                        echo '<img src="' . htmlspecialchars($imagem_principal) . '" alt="' . htmlspecialchars($row['nome']) . '" class="mini-imagem">';
+                        echo '<div class="descricao">';
+                        echo '<h3>' . htmlspecialchars($row['nome']) . '</h3>';
+                        echo '<p>R$ ' . htmlspecialchars($row['valor']) . '</p>';
+                        echo '</div>';
+                        echo '</li>';
+                    }
+                } else {
+                    echo '<li>Nenhum espaço cadastrado.</li>';
+                }
+
+                $conn->close(); // Fecha a conexão com o banco de dados
+                ?>
+            </ul>
         </div>
-        <!--Inicio navBar-->
+
         <nav name="navBar" id="navBar">
             <ul class="navlinks">
                 <li><a href="inicio.php"><ion-icon name="home-outline"></ion-icon></a></li>
@@ -76,10 +107,7 @@
                 <li><a href="perfil.php"><ion-icon name="person-outline"></ion-icon></a></li>
             </ul>
         </nav>
-        <!--Fim navBar-->
-        <!--Fim corpo do menu-->
     </div>
-    <!--Final destaque -->
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
