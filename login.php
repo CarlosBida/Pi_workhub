@@ -1,3 +1,43 @@
+<?php
+session_start(); // Inicia a sessão
+
+include 'conexaoBD.php'; // Inclui o arquivo de conexão ao banco de dados
+
+$message = ''; // Inicializa a variável de mensagem
+
+// Verifica se o formulário foi enviado
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Consulta para verificar se o usuário existe
+    $sql = "SELECT id, username, password FROM usuarios WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Verifica se o usuário foi encontrado
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        // Verifica a senha
+        if (password_verify($password, $user['password'])) {
+            // Senha correta, inicia a sessão
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            header("Location: inicio.php"); // Redireciona para a página inicial
+            exit();
+        } else {
+            $message = "Senha incorreta.";
+        }
+    } else {
+        $message = "Usuário não encontrado.";
+    }
+
+    $conn->close(); // Fecha a conexão com o banco de dados
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -24,16 +64,24 @@
             <img class="user2" src="img/User.png" />
         </div>
     </div>
-    <div class="insira-seu-email">
-        <input type="email" placeholder="Digite seu E-mail">
-        <span class="fa fa-user"></span>
-    </div>
-    <div class="insira-sua-senha">
-        <input type="password" placeholder="Digite sua Senha">
-        <span class="fa fa-lock"></span>
-    </div>
+    
+    <!-- Mensagem de erro -->
+    <?php if (!empty($message)): ?>
+        <div class="error-message"><?php echo htmlspecialchars($message); ?></div>
+    <?php endif; ?>
 
-    <button class="botao-login" onclick="window.location.href='inicio.php'">Login</button>
+    <form method="POST" action="">
+        <div class="insira-seu-email">
+            <input type="email" name="email" placeholder="Digite seu E-mail" required>
+            <span class="fa fa-user"></span>
+        </div>
+        <div class="insira-sua-senha">
+            <input type="password" name="password" placeholder="Digite sua Senha" required>
+            <span class="fa fa-lock"></span>
+        </div>
+
+        <button type="submit" class="botao-login">Login</button>
+    </form>
 
     <div class="social-login">
         <a href="#" class="social_1">
@@ -47,18 +95,18 @@
         </a>
     </div>
 
-    <a href="#" class="esqueceu-sua-senha">Esqueceu sua senha ?</a>
+    <a href="#" class="esqueceu-sua-senha">Esqueceu sua senha?</a>
    
     <span class="ou-logue-com">Ou logue com</span>
 
     <div class="cadastrar">
       <span>
         <span class="cadastrar-span">
-          Não tem cadastro ?
+          Não tem cadastro?
         </span>
-        <a href="#" class="cadastrar-link">Crie sua conta.</a>
+        <a href="cadastroPerfil.php" class="cadastrar-link">Crie sua conta.</a>
       </span>
     </div>
-  </div>
+</div>
 </body>
 </html>

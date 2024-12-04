@@ -72,7 +72,7 @@
                 include 'conexaoBD.php'; // Inclui o arquivo de conexão
 
                 // Consulta para selecionar os espaços cadastrados
-                $sql = "SELECT nome, valor, imagens FROM espacos";
+                $sql = "SELECT id,nome, valor, imagens, localizacao, descricao FROM espacos";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
@@ -83,10 +83,12 @@
                         $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png'; // Imagem padrão caso não tenha
 
                         echo '<li>';
-                        echo '<img src="' . htmlspecialchars($imagem_principal) . '" alt="' . htmlspecialchars($row['nome']) . '" class="mini-imagem">';
+                        echo '<img src="' . htmlspecialchars($imagem_principal) . '" alt="' . htmlspecialchars($row['nome']) . '" class="mini-imagem" width="50" height="50">';
                         echo '<div class="descricao">';
-                        echo '<h3>' . htmlspecialchars($row['nome']) . '</h3>';
+                        echo '<h3><a href="descricao.php?id=' . htmlspecialchars($row['id']) . '">' . htmlspecialchars($row['nome']) . '</a></h3>';
                         echo '<p>R$ ' . htmlspecialchars($row['valor']) . '</p>';
+                        echo '<p>Localização: ' . htmlspecialchars($row['localizacao']) . '</p>'; // Adiciona a localização
+                        echo '<p>' . htmlspecialchars($row['descricao']) . '</p>'; // Adiciona a descrição
                         echo '</div>';
                         echo '</li>';
                     }
@@ -98,7 +100,6 @@
                 ?>
             </ul>
         </div>
-
         <nav name="navBar" id="navBar">
             <ul class="navlinks">
                 <li><a href="inicio.php"><ion-icon name="home-outline"></ion-icon></a></li>

@@ -130,7 +130,10 @@ nav {
 .lista-imoveis {
     padding: 10px;
 }
-
+a {
+    text-decoration: none; /* Remove a decoração do link */
+    color: inherit; /* Mantém a cor do texto pai */
+}
 .lista-imoveis ul {
     list-style-type: none; /* Remove marcadores da lista */
     padding: 0;
@@ -142,14 +145,9 @@ nav {
     margin-bottom: 10px; /* Espaçamento entre os itens da lista */
 }
 
-.mini-imagem {
-    width: 50px; /* Largura da mini imagem */
-    height: 50px; /* Altura da mini imagem */
-    object-fit: cover; /* Corta a imagem para preencher o espaço */
-    border-radius: 10px; /* Cantos arredondados para a mini imagem */
-    margin-right: 10px; /* Espaçamento à direita da imagem */
+.descricao {
+    flex-grow: 1; /* Faz a descrição ocupar o espaço restante */
 }
-
 .descricao {
     flex-grow: 1; /* Faz a descrição ocupar o espaço restante */
 }

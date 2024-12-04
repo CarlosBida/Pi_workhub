@@ -156,3 +156,44 @@ nav {
   top: 12px;
   object-fit: cover;
 }
+.lista-imoveis {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 350px; /* Espaço acima da lista */
+  max-width: 390px; /* Largura máxima */
+  margin-left: 5px;
+  margin-right: auto; /* Centraliza a lista */
+}
+.lista-imoveis h2 {
+  text-align: center; /* Centraliza o título da lista */
+  margin-bottom: 15px; /* Espaço abaixo do título */
+}
+.lista-imoveis ul {
+  list-style: none; /* Remove os marcadores da lista */
+  padding: 0; /* Remove o padding padrão */
+}
+.lista-imoveis li {
+  display: flex; /* Exibe os itens da lista em flexbox */
+  align-items: center; /* Alinha verticalmente */
+  margin-bottom: 10px; /* Espaço entre os itens */
+  border-bottom: 1px solid #eee; /* Linha separadora */
+  padding-bottom: 10px; /* Espaço abaixo do item */
+}
+.mini-imagem {
+  margin-right: 10px; /* Espaço entre a imagem e o texto */
+  border-radius: 5px; /* Bordas arredondadas */
+}
+.descricao {
+  flex-grow: 1; /* Faz a descrição ocupar o espaço restante */
+}
+.success-message {
+  background-color: #dff0d8;
+  color: #3c763d;
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid #d6e9c6;
+  border-radius: 5px;
+  text-align: center;
+}
