@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="manifest" href="manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workhub</title>
     <link rel="stylesheet" href="css/style_login.css">
@@ -108,5 +109,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </span>
     </div>
 </div>
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then((registration) => {
+                console.log('Service Worker registrado com sucesso:', registration);
+            })
+            .catch((error) => {
+                console.log('Registro do Service Worker falhou:', error);
+            });
+    });
+}
+</script>
 </body>
 </html>

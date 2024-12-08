@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/styleCadastro.css"> 
     <link href="img/favicon.ico" rel="icon">
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div class="logo"><img src="img/Workhub logo.png"></div>
@@ -34,6 +35,10 @@
             <textarea name="descricao" required></textarea>
         </div>
         <div class="form-control">
+            <label class="placeholder">Telefone para contato</label>
+            <input type="tel" name="telefone" required placeholder="(XX) XXXXX-XXXX">
+        </div>
+        <div class="form-control">
             <label class="placeholder">Imagens</label>
             <input type="file" name="imagens[]" multiple required>
         </div>
@@ -53,5 +58,18 @@
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registrado com sucesso:', registration);
+                })
+                .catch((error) => {
+                    console.log('Registro do Service Worker falhou:', error);
+                });
+        });
+    }
+</script>
 </body>
 </html>

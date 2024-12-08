@@ -14,11 +14,11 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 
 if (!$row) {
-    // Se não encontrar o imóvel, redireciona ou mostra uma mensagem
     echo "Imóvel não encontrado.";
     exit;
 }
 
+// Verifique se a coluna 'imagens' não está vazia
 $imagens = json_decode($row['imagens']);
 $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
 ?>
@@ -27,9 +27,10 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="manifest" href="manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($row['nome']); ?> - Workhub</title>
-    <link rel="stylesheet" href="css/styleDescricao.css">
+
     <link href="img/favicon.ico" rel="icon">
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
     <style>
@@ -42,34 +43,38 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
         }
         .main-container {
             padding: 20px;
-            max-width: 400px; /* Largura máxima da caixa de conteúdo */
+            max-width: 600px;
             margin: auto;
             background: white;
-            border-radius: 20px; /* Bordas arredondadas */
+            border-radius: 20px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: relative;
         }
         .imagem-principal {
             width: 100%;
             height: auto;
-            border-radius: 20px; /* Bordas arredondadas */
+            border-radius: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra leve */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .info-container {
+            margin-top: 15px;
         }
         .descricao {
             font-size: 1.5em;
-            font-weight: bold; /* Negrito para destaque */
-            margin-top: 15px; /* Espaçamento acima da descrição */
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
         }
-        .localizacao, .valor {
-            font-size: 1.1em; /* Tamanho da fonte */
-            margin-top: 5px; /* Espaçamento acima */
-            display: flex; /* Para alinhamento dos ícones */
-            align-items: center; /* Centraliza verticalmente */
+        .localizacao, .valor, .telefone {
+            font-size: 1.1em;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
         }
-        .localizacao i, .valor i {
-            margin-right: 8px; /* Espaçamento entre o ícone e o texto */
-            color: #007BFF; /* Cor dos ícones */
+        .localizacao i, .valor i, .telefone i {
+            margin-right: 8px;
+            color: #007BFF;
         }
         .back-button {
             position: absolute;
@@ -80,23 +85,46 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
             text-decoration: none;
         }
         nav {
-            background-color: #fff;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            padding: 10px 0;
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.9); 
+            justify-content: space-around; 
+            align-items: center;
+            position: fixed; 
+            bottom: 0;
+            width: 90%;
+            border-radius: 30px;    
+            padding: 10px 0; 
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+            z-index: 10; 
         }
+
         .navlinks {
-            list-style-type: none;
-            text-align: center;
-            padding: 0;
+            display: flex; 
+            justify-content: space-around; 
+            width: 100%; 
         }
+
         .navlinks li {
-            display: inline;
-            margin: 0 15px;
+            list-style: none;
+            margin: 0; 
+            padding: 0 15px; 
         }
-        .navlinks a {
-            text-decoration: none;
-            color: #333;
+
+        .navlinks li a {
+            text-decoration: none; 
+            color: inherit; 
+            display: flex; 
+            align-items: center; 
         }
+
+        .navlinks li ion-icon {
+            font-size: 33px;
+        }
+
+        .navlinks li a:hover ion-icon {
+            color: #008f17; 
+        }
+
     </style>
 </head>
 
@@ -108,16 +136,27 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
 
         <img src="<?php echo htmlspecialchars($imagem_principal); ?>" alt="<?php echo htmlspecialchars($row['nome']); ?>" class="imagem-principal">
 
-        <span class="descricao"><?php echo htmlspecialchars($row['nome']); ?></span>
+        <div class="info-container">
+            <span class="descricao"><?php echo htmlspecialchars($row['nome']); ?></span>
 
-        <div class="localizacao">
-            <ion-icon name="location-outline" style="margin-right: 8px;"></ion-icon>
-            <?php echo htmlspecialchars($row['localizacao']); ?>
-        </div>
+            <div class="localizacao">
+                <ion-icon name="location-outline"></ion-icon>
+                <?php echo htmlspecialchars($row['localizacao']); ?>
+            </div>
 
-        <div class="valor">
-            <ion-icon name="cash-outline" style="margin-right: 8px;"></ion-icon>
-            <strong>R$ <?php echo htmlspecialchars(number_format($row['valor'], 2, ',', '.')); ?></strong>
+            <div class="telefone">
+                <ion-icon name="call-outline"></ion-icon>
+                <strong><?php echo htmlspecialchars($row['telefone']); ?></strong>
+            </div>
+
+            <div class="valor">
+                <ion-icon name="cash-outline"></ion-icon>
+                <strong>R$ <?php echo htmlspecialchars(number_format($row['valor'], 2, ',', '.')); ?></strong>
+            </div>
+
+            <div class="descricao" style="color: black; margin-top: 15px;">
+                <p><?php echo nl2br(htmlspecialchars($row['descricao'])); ?></p>
+            </div>
         </div>
     </div>
 
@@ -132,6 +171,18 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="assets/js/app.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registrado com sucesso:', registration);
+                })
+                .catch((error) => {
+                    console.log('Registro do Service Worker falhou:', error);
+                });
+        });
+    }
+</script>
 </body>
 </html>

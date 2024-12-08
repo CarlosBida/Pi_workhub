@@ -1,7 +1,17 @@
 <?php
 include 'conexaoBD.php'; // Conectar ao banco de dados
 
+session_start(); // Inicia a sessão
+
 $message = ''; // Inicializa a variável de mensagem
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['user_id'])) {
+    die("Acesso negado. Você precisa estar logado.");
+}
+
+// Obtém o ID do usuário da sessão
+$userId = $_SESSION['user_id'];
 
 // Verifica se foi enviado um formulário
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -15,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash da senha
         $sql = "UPDATE usuarios SET username = ?, email = ?, password = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $username, $email, $hashed_password, $user['id']);
+        $stmt->bind_param("sssi", $username, $email, $hashed_password, $userId);
     } else {
         // Se a senha não for fornecida, não a atualiza
         $sql = "UPDATE usuarios SET username = ?, email = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssi", $username, $email, $user['id']);
+        $stmt->bind_param("ssi", $username, $email, $userId);
     }
 
     // Executa a atualização e verifica o resultado
@@ -31,10 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Consulta para obter os dados do usuário (substitua '1' pelo ID do usuário logado)
+// Consulta para obter os dados do usuário
 $sql = "SELECT id, username, email FROM usuarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
-$userId = 1; // Supondo que você tenha um mecanismo para obter o ID do usuário logado
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -53,12 +62,11 @@ $conn->close(); // Fecha a conexão com o banco de dados
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="manifest" href="manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Perfil</title>
     <link rel="stylesheet" href="css/stylePerfil.css">
-    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
-    <!-- Fonte -->
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
     <style>
         .logout-icon {
@@ -108,5 +116,18 @@ $conn->close(); // Fecha a conexão com o banco de dados
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registrado com sucesso:', registration);
+                })
+                .catch((error) => {
+                    console.log('Registro do Service Worker falhou:', error);
+                });
+        });
+    }
+    </script>
 </body>
 </html>

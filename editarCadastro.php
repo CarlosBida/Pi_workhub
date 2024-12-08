@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <link rel="manifest" href="manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Imóvel - Workhub</title>
     <link rel="stylesheet" href="css/styleCadastro.css"> 
@@ -25,7 +26,7 @@
         $id = intval($_GET['id']);
         
         // Consulta para buscar os dados do imóvel
-        $sql = "SELECT nome, valor, localizacao, descricao, imagens FROM espacos WHERE id = ?";
+        $sql = "SELECT nome, valor, localizacao, descricao, telefone, imagens FROM espacos WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -57,6 +58,10 @@
             <input type="text" name="localizacao" value="<?php echo htmlspecialchars($imovel['localizacao']); ?>" required>
         </div>
         <div class="form-control">
+            <label class="placeholder">Telefone para contato</label>
+            <input type="tel" name="telefone" value="<?php echo htmlspecialchars($imovel['telefone']); ?>" required placeholder="(XX) XXXXX-XXXX">
+        </div>
+        <div class="form-control">
             <label class="placeholder">Uma breve descrição do seu espaço</label>
             <textarea name="descricao" required><?php echo htmlspecialchars($imovel['descricao']); ?></textarea>
         </div>
@@ -86,5 +91,18 @@
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registrado com sucesso:', registration);
+                })
+                .catch((error) => {
+                    console.log('Registro do Service Worker falhou:', error);
+                });
+        });
+    }
+</script>
 </body>
 </html>

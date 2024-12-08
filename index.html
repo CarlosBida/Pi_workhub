@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <p>Redirecionando para o login...</p>
+    <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar à Tela Inicial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .instructions {
+            display: none; /* Esconde as instruções inicialmente */
+            margin-top: 20px;
+            border: 1px solid #007BFF;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f0f8ff;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bem-vindo ao Meu PWA</h1>
+    <button id="addToHomeBtn">Adicionar à Tela Inicial</button>
+
+    <div class="instructions" id="instructions">
+        <h2>Instruções:</h2>
+        <p><strong>No Google Chrome:</strong></p>
+        <ol>
+            <li>Toque nos três pontos verticais no canto superior direito.</li>
+            <li>Selecione "Adicionar à tela inicial".</li>
+            <li>Toque em "Adicionar".</li>
+        </ol>
+        <p><strong>No Safari:</strong></p>
+        <ol>
+            <li>Toque no ícone de compartilhamento na parte inferior.</li>
+            <li>Selecione "Adicionar à Tela de Início".</li>
+            <li>Toque em "Adicionar".</li>
+        </ol>
+    </div>
+
+    <script>
+        document.getElementById('addToHomeBtn').addEventListener('click', function() {
+            document.getElementById('instructions').style.display = 'block';
+        });
+    </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registrado com sucesso:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Registro do Service Worker falhou:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

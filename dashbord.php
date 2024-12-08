@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workhub</title>
@@ -38,7 +39,6 @@
         <img class="subtract2" src="img/Subtract.svg" />
         <img class="chart-alt" src="img/Chart_alt.svg" />
         <div class="title">Registros ativos:</div>
-        <div class="title2">Olá, Maria</div>
         <img class="work-removebg-preview-2" src="img/Workhub logo.png" />
     </div>
     <!-- Lista de imóveis -->
@@ -88,5 +88,18 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="assets/js/app.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registrado com sucesso:', registration);
+                })
+                .catch((error) => {
+                    console.log('Registro do Service Worker falhou:', error);
+                });
+        });
+    }
+</script>
 </body>
 </html>

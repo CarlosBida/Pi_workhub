@@ -10,9 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $valor = trim($_POST['valor']);
     $localizacao = trim($_POST['localizacao']);
     $descricao = trim($_POST['descricao']);
+    $telefone = trim($_POST['telefone']); // Captura o telefone
 
     // Verifica se os campos estão vazios
-    if (empty($nome) || empty($valor) || empty($localizacao) || empty($descricao)) {
+    if (empty($nome) || empty($valor) || empty($localizacao) || empty($descricao) || empty($telefone)) {
         $message = "Todos os campos são obrigatórios.";
     } else {
         // Processamento das imagens
@@ -37,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $imagens_json = json_encode($imagens);
 
         // Insere os dados no banco de dados
-        $stmt = $conn->prepare("INSERT INTO espacos (nome, valor, localizacao, descricao, imagens) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sisss", $nome, $valor, $localizacao, $descricao, $imagens_json);
+        $stmt = $conn->prepare("INSERT INTO espacos (nome, valor, localizacao, descricao, telefone, imagens) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sissss", $nome, $valor, $localizacao, $descricao, $telefone, $imagens_json); // Adiciona o telefone
 
         if ($stmt->execute()) {
             $message = "Espaço cadastrado com sucesso!";
