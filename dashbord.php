@@ -15,20 +15,32 @@
 <body>
     <div class="home-profissional">
     <?php
+        session_start(); // Inicia a sessão
         if (isset($_GET['message'])) {
             echo '<div class="success-message">' . htmlspecialchars($_GET['message']) . '</div>';
         }
 
         include 'conexaoBD.php'; // Inclui o arquivo de conexão
 
-        // Consulta para contar o número de imóveis cadastrados
-        $sql_count = "SELECT COUNT(*) as total FROM espacos";
-        $result_count = $conn->query($sql_count);
+        // Verifica se o usuário está logado
+        if (!isset($_SESSION['user_id'])) {
+            die("Acesso negado. Você precisa estar logado.");
+        }
+
+        $userId = $_SESSION['user_id']; // Captura o ID do usuário logado
+
+        // Consulta para contar o número de imóveis cadastrados pelo usuário
+        $sql_count = "SELECT COUNT(*) as total FROM espacos WHERE usuario_id = ?";
+        $stmt_count = $conn->prepare($sql_count);
+        $stmt_count->bind_param("i", $userId);
+        $stmt_count->execute();
+        $result_count = $stmt_count->get_result();
         $total_imoveis = 0; // Inicializa a variável
         if ($result_count->num_rows > 0) {
             $row_count = $result_count->fetch_assoc();
             $total_imoveis = $row_count['total']; // Obtém o total de imóveis
         }
+        $stmt_count->close(); // Fecha o statement
     ?>
         <div class="rectangle-7"></div>
         <img class="notebook" src="img/notebook.svg" />
@@ -45,9 +57,12 @@
     <div class="lista-imoveis">
         <ul>
             <?php
-            // Consulta para selecionar os espaços cadastrados
-            $sql = "SELECT id, nome, valor, imagens, localizacao, descricao FROM espacos";
-            $result = $conn->query($sql);
+            // Consulta para selecionar os espaços cadastrados pelo usuário
+            $sql = "SELECT id, nome, valor, imagens, localizacao, descricao FROM espacos WHERE usuario_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
                 // Saída de dados de cada linha
@@ -70,6 +85,7 @@
                 echo '<li>Nenhum espaço cadastrado.</li>';
             }
 
+            $stmt->close(); // Fecha o statement
             $conn->close(); // Fecha a conexão com o banco de dados
             ?>
         </ul>

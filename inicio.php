@@ -75,7 +75,7 @@ $usuario_nome = $_SESSION['username']; // Obtém o nome do usuário
 
         <!-- Lista de imóveis -->
         <div class="lista-imoveis">
-            <h2>Imóveis Cadastrados</h2>
+            <h2>Espaços Cadastrados</h2>
             <ul>
                 <?php
                 // Consulta para selecionar os espaços cadastrados

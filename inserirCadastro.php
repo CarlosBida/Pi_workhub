@@ -4,6 +4,14 @@ include 'conexaoBD.php';
 
 $message = '';
 
+// Verifica se o usuário está logado
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    die("Acesso negado. Você precisa estar logado.");
+}
+
+$userId = $_SESSION['user_id']; // Captura o ID do usuário logado
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Captura os dados do formulário e faz a validação
     $nome = trim($_POST['nome']);
@@ -37,9 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Converte o array de imagens para JSON
         $imagens_json = json_encode($imagens);
 
-        // Insere os dados no banco de dados
-        $stmt = $conn->prepare("INSERT INTO espacos (nome, valor, localizacao, descricao, telefone, imagens) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sissss", $nome, $valor, $localizacao, $descricao, $telefone, $imagens_json); // Adiciona o telefone
+        // Insere os dados no banco de dados, incluindo o ID do usuário
+        $stmt = $conn->prepare("INSERT INTO espacos (nome, valor, localizacao, descricao, telefone, imagens, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sissssi", $nome, $valor, $localizacao, $descricao, $telefone, $imagens_json, $userId); // Adiciona o ID do usuário
 
         if ($stmt->execute()) {
             $message = "Espaço cadastrado com sucesso!";
