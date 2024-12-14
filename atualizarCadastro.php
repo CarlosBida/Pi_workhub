@@ -7,6 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['id'])) {
     $valor = $_POST['valor'];
     $localizacao = $_POST['localizacao'];
     $descricao = $_POST['descricao'];
+    $telefone = $_POST['telefone'];
+    $capacidade = $_POST['capacidade'];
+    $tipo = $_POST['tipo'];
+    $amenidades = $_POST['amenidades'];
+    $regras = $_POST['regras'];
+    $disponibilidade = isset($_POST['disponibilidade']) ? $_POST['disponibilidade'] : []; // Verifica se existe
 
     // Lidar com o upload de imagens (caso novas sejam enviadas)
     if (!empty($_FILES['imagens']['name'][0])) {
@@ -19,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['id'])) {
             // Mover o arquivo para o diretório de uploads
             if (move_uploaded_file($file_tmp, $upload_directory . $file_name)) {
                 $imagens[] = $upload_directory . $file_name;
+            } else {
+                echo "Erro ao fazer o upload da imagem: " . htmlspecialchars($file_name);
             }
         }
         $imagens_json = json_encode($imagens);
@@ -33,17 +41,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['id'])) {
         $imagens_json = $imovel['imagens'];
     }
 
+    // Formatar a disponibilidade como uma string separada por vírgulas
+    $disponibilidade_str = implode(',', $disponibilidade);
+
     // Atualizar os dados do imóvel
-    $sql = "UPDATE espacos SET nome = ?, valor = ?, localizacao = ?, descricao = ?, imagens = ? WHERE id = ?";
+    $sql = "UPDATE espacos SET nome = ?, valor = ?, localizacao = ?, descricao = ?, telefone = ?, capacidade = ?, tipo = ?, amenidades = ?, regras = ?, imagens = ?, disponibilidade = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sdsssi", $nome, $valor, $localizacao, $descricao, $imagens_json, $id);
+    $stmt->bind_param("sdsssssssssi", $nome, $valor, $localizacao, $descricao, $telefone, $capacidade, $tipo, $amenidades, $regras, $imagens_json, $disponibilidade_str, $id);
 
     if ($stmt->execute()) {
         // Redirecionar para o dashboard com uma mensagem de sucesso
         header("Location: dashbord.php?message=Cadastro atualizado com sucesso!");
         exit();
     } else {
-        echo "Erro ao atualizar: " . $stmt->error;
+        echo "Erro ao atualizar: " . htmlspecialchars($stmt->error);
     }
 } else {
     echo "Método de requisição inválido ou ID do imóvel não especificado.";

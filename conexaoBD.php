@@ -4,7 +4,7 @@
 $servername = "localhost";
 $username = "root";
 $password = ""; // Deixe vazio se não houver senha
-$dbname = "workhub"; // Substitua pelo nome do seu banco de dados
+$dbname = "bdworkhub"; // Substitua pelo nome do seu banco de dados
 
 // Cria a conexão
 $conn = mysqli_connect($servername, $username, $password, $dbname);

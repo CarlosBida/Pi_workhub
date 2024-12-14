@@ -88,3 +88,36 @@ nav {
 .navlinks li a:hover ion-icon {
   color: #008f17; 
 }
+#calendar {
+  max-width: 900px;
+  margin: 40px auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.fc-toolbar {
+  background: #f7f7f7;
+  border: none;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+.fc-day {
+  border: 1px solid #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.fc-day:hover {
+  background-color: #f0f8ff; /* Efeito de hover para os dias */
+}
+
+.fc-day.fc-today {
+  background-color: #e6f7ff;
+}
+
+.fc-day.fc-sat, .fc-day.fc-sun {
+  background-color: #f9f9f9; /* Diferenciar finais de semana */
+}

@@ -21,6 +21,17 @@ if (!$row) {
 // Verifique se a coluna 'imagens' não está vazia
 $imagens = json_decode($row['imagens']);
 $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
+
+// Processar a coluna 'disponibilidade'
+$disponibilidade = explode(',', $row['disponibilidade']);
+$events = []; // Inicializa o array de eventos
+foreach ($disponibilidade as $dia) {
+    $events[] = [
+        'start' => trim($dia), // Adiciona cada dia de disponibilidade
+        'end' => trim($dia),   // Define o fim do evento como o mesmo dia
+        'color' => '#FFCCCC'   // Cor para dias indisponíveis
+    ];
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +44,12 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
 
     <link href="img/favicon.ico" rel="icon">
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/lang/pt-br.js'></script>
+
     <style>
         body {
             background-color: #f9f9f9;
@@ -66,15 +83,29 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
             margin-top: 10px;
             color: #333;
         }
-        .localizacao, .valor, .telefone {
+        .localizacao, .valor, .telefone, .capacidade, .tipo {
             font-size: 1.1em;
             margin-top: 5px;
             display: flex;
             align-items: center;
         }
-        .localizacao i, .valor i, .telefone i {
+        .localizacao i, .valor i, .telefone i, .capacidade i, .tipo i {
             margin-right: 8px;
             color: #007BFF;
+        }
+        .regras {
+            color: #d9534f; /* Destaque para as regras */
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        #calendar {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: white;
+            padding: 10px;
+            z-index: 1; /* Certifique-se de que o calendário fique acima */
+            position: relative;
         }
         .back-button {
             position: absolute;
@@ -97,34 +128,41 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
             z-index: 10; 
         }
-
         .navlinks {
             display: flex; 
             justify-content: space-around; 
             width: 100%; 
         }
-
         .navlinks li {
             list-style: none;
             margin: 0; 
             padding: 0 15px; 
         }
-
         .navlinks li a {
             text-decoration: none; 
             color: inherit; 
             display: flex; 
             align-items: center; 
         }
-
         .navlinks li ion-icon {
             font-size: 33px;
         }
-
         .navlinks li a:hover ion-icon {
             color: #008f17; 
         }
-
+        .legenda {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        .legenda div {
+            width: 20px;
+            height: 20px;
+            background-color: #FFCCCC;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
     </style>
 </head>
 
@@ -154,11 +192,32 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
                 <strong>R$ <?php echo htmlspecialchars(number_format($row['valor'], 2, ',', '.')); ?></strong>
             </div>
 
+            <div class="capacidade">
+                <ion-icon name="people-outline"></ion-icon>
+                <strong>Capacidade: <?php echo htmlspecialchars($row['capacidade']); ?> pessoas</strong>
+            </div>
+
+            <div class="tipo">
+                <ion-icon name="business-outline"></ion-icon>
+                <strong>Tipo: <?php echo htmlspecialchars($row['tipo']); ?></strong>
+            </div>
+
+            <div class="regras">
+                <strong>Regras:</strong> <?php echo nl2br(htmlspecialchars($row['regras'])); ?>
+            </div>
+
             <div class="descricao" style="color: black; margin-top: 15px;">
                 <p><?php echo nl2br(htmlspecialchars($row['descricao'])); ?></p>
             </div>
         </div>
     </div>
+
+    <div class="legenda">
+        <div></div>
+        <span>Dias em vermelho estão indisponíveis para locação.</span>
+    </div>
+
+    <div id="calendar"></div>
 
     <nav name="navBar" id="navBar">
         <ul class="navlinks">
@@ -172,17 +231,44 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-                .then((registration) => {
-                    console.log('Service Worker registrado com sucesso:', registration);
-                })
-                .catch((error) => {
-                    console.log('Registro do Service Worker falhou:', error);
-                });
+        $(document).ready(function() {
+            var reservedEvents = <?php echo json_encode($events); ?>; // Array de eventos reservados
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                editable: false,
+                selectable: false,
+                eventLimit: true,
+                locale: 'pt-br',
+                events: reservedEvents,
+                dayRender: function(date, cell) {
+                    var isReserved = reservedEvents.some(function(event) {
+                        return moment(date).isBetween(event.start, event.end, null, '[]'); // Verifica se está entre as reservas
+                    });
+
+                    if (isReserved) {
+                        cell.css("background-color", "#FFCCCC"); // Tom claro para dias indisponíveis
+                        cell.append("<span style='color: red; font-weight: bold;'>Indisponível</span>"); // Mensagem
+                    }
+                }
+            });
         });
-    }
-</script>
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registrado com sucesso:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Registro do Service Worker falhou:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="css/styleCadastro.css"> 
     <link href="img/favicon.ico" rel="icon">
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
-    <div class="logo"><img src="img/Workhub logo.png"></div>
+    <div class="logo"><img src="img/Workhub logo.png" alt="Logo Workhub"></div>
     <div class="info-1">Edite seu espaço</div>
     <div class="msg-1">
         <?php 
@@ -26,7 +28,7 @@
         $id = intval($_GET['id']);
         
         // Consulta para buscar os dados do imóvel
-        $sql = "SELECT nome, valor, localizacao, descricao, telefone, imagens FROM espacos WHERE id = ?";
+        $sql = "SELECT nome, valor, localizacao, descricao, telefone, capacidade, tipo, amenidades, regras, disponibilidade, imagens FROM espacos WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -44,7 +46,6 @@
     ?>
 
     <form action="atualizarCadastro.php?id=<?php echo $id; ?>" method="POST" enctype="multipart/form-data">
-        
         <div class="form-control">
             <label class="placeholder">Nome do espaço</label>
             <input type="text" name="nome" value="<?php echo htmlspecialchars($imovel['nome']); ?>" required>
@@ -66,6 +67,32 @@
             <textarea name="descricao" required><?php echo htmlspecialchars($imovel['descricao']); ?></textarea>
         </div>
         <div class="form-control">
+            <label class="placeholder">Capacidade (número de pessoas)</label>
+            <input type="number" name="capacidade" value="<?php echo htmlspecialchars($imovel['capacidade']); ?>" required>
+        </div>
+        <div class="form-control">
+            <label class="placeholder">Tipo de espaço</label>
+            <select name="tipo" required>
+                <option value="Sala de Reunião" <?php echo $imovel['tipo'] == 'Sala de Reunião' ? 'selected' : ''; ?>>Sala de Reunião</option>
+                <option value="Escritório" <?php echo $imovel['tipo'] == 'Escritório' ? 'selected' : ''; ?>>Escritório</option>
+                <option value="Auditório" <?php echo $imovel['tipo'] == 'Auditório' ? 'selected' : ''; ?>>Auditório</option>
+                <option value="Estúdio" <?php echo $imovel['tipo'] == 'Estúdio' ? 'selected' : ''; ?>>Estúdio</option>
+                <option value="Coworking" <?php echo $imovel['tipo'] == 'Coworking' ? 'selected' : ''; ?>>Coworking</option>
+            </select>
+        </div>
+        <div class="form-control">
+            <label class="placeholder">Amenidades (separar por vírgulas)</label>
+            <input type="text" name="amenidades" value="<?php echo htmlspecialchars($imovel['amenidades']); ?>" placeholder="Wi-Fi, Projetor, Ar-condicionado">
+        </div>
+        <div class="form-control">
+            <label class="placeholder">Regras do espaço (separar por vírgulas)</label>
+            <input type="text" name="regras" value="<?php echo htmlspecialchars($imovel['regras']); ?>" placeholder="Não fumar, Horário de silêncio após as 22h">
+        </div>
+        <div class="form-control">
+            <label class="placeholder">Disponibilidade (datas disponíveis)</label>
+            <input type="text" id="datepicker" name="disponibilidade[]" value="<?php echo htmlspecialchars($imovel['disponibilidade']); ?>" required>
+        </div>
+        <div class="form-control">
             <label class="placeholder">Imagens</label>
             <input type="file" name="imagens[]" multiple>
             <p>Imagens atuais: <?php 
@@ -79,6 +106,21 @@
             <button type="submit">Atualizar</button>
         </div>
     </form>
+
+    <!-- Formulário de Cadastro de Reservas -->
+    <div class="reservas">
+        <h2>Cadastro de Reservas</h2>
+        <form action="cadastrarReserva.php" method="POST">
+            <input type="hidden" name="espaco_id" value="<?php echo $id; ?>">
+            <div class="form-control">
+                <label class="placeholder">Selecione os dias para reserva</label>
+                <input type="text" id="datepicker-reservas" name="data[]" required>
+            </div>
+            <div class="cadastrar">
+                <button type="submit">Reservar</button>
+            </div>
+        </form>
+    </div>
 
     <nav name="navBar" id="navBar">
         <ul class="navlinks">
@@ -103,6 +145,28 @@
                 });
         });
     }
-</script>
+
+    // Configuração do Flatpickr para selecionar múltiplas datas para disponibilidade
+    flatpickr("#datepicker", {
+        mode: "multiple",
+        dateFormat: "Y-m-d",
+        allowInput: true,
+        onClose: function(selectedDates) {
+            const dates = selectedDates.map(date => date.toISOString().split('T')[0]);
+            document.getElementById("datepicker").value = dates.join(', ');
+        }
+    });
+
+    // Configuração do Flatpickr para selecionar múltiplas datas para reservas
+    flatpickr("#datepicker-reservas", {
+        mode: "multiple",
+        dateFormat: "Y-m-d",
+        allowInput: true,
+        onClose: function(selectedDates) {
+            const dates = selectedDates.map(date => date.toISOString().split('T')[0]);
+            document.getElementById("datepicker-reservas").value = dates.join(', ');
+        }
+    });
+    </script>
 </body>
 </html>
