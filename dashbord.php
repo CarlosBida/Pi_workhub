@@ -10,7 +10,6 @@
     <link href="img/favicon.ico" rel="icon">
     <!-- Fonte -->
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
-        
 </head>
 <body>
     <div class="home-profissional">
@@ -29,28 +28,30 @@
 
         $userId = $_SESSION['user_id']; // Captura o ID do usuário logado
 
-        // Consulta para contar o número de imóveis cadastrados pelo usuário
-        $sql_count = "SELECT COUNT(*) as total FROM espacos WHERE usuario_id = ?";
+        // Consulta para contar o número de solicitações pendentes do usuário
+        $sql_count = "SELECT COUNT(*) as total FROM reservas WHERE usuario_id = ? AND status = 'pendente'";
         $stmt_count = $conn->prepare($sql_count);
         $stmt_count->bind_param("i", $userId);
         $stmt_count->execute();
         $result_count = $stmt_count->get_result();
-        $total_imoveis = 0; // Inicializa a variável
+        $total_solicitacoes = 0; // Inicializa a variável
         if ($result_count->num_rows > 0) {
             $row_count = $result_count->fetch_assoc();
-            $total_imoveis = $row_count['total']; // Obtém o total de imóveis
+            $total_solicitacoes = $row_count['total']; // Obtém o total de solicitações pendentes
         }
         $stmt_count->close(); // Fecha o statement
     ?>
         <div class="rectangle-7"></div>
         <img class="notebook" src="img/notebook.svg" />
         <img class="subtract" src="img/Subtract.svg" />
-        <div class="agenda">Espaços</div>
-        <div class="_3"><?php echo htmlspecialchars($total_imoveis); ?></div> <!-- Exibe o número de imóveis -->
+        <div class="agenda">
+        <a href="gerenciaReservas.php" style="text-decoration: none; color: inherit;">Solicitações</a>
+        </div>
+        <div class="_3"><?php echo htmlspecialchars($total_solicitacoes); ?></div> <!-- Exibe o número de solicitações pendentes -->
         <div class="rectangle-8"></div>
         <img class="subtract2" src="img/Subtract.svg" />
         <img class="chart-alt" src="img/Chart_alt.svg" />
-        <div class="title">Registros ativos:</div>
+        <div class="title">Solicitações Pendentes</div>
         <img class="work-removebg-preview-2" src="img/Workhub logo.png" />
     </div>
     <!-- Lista de imóveis -->
@@ -116,6 +117,6 @@
                 });
         });
     }
-</script>
+    </script>
 </body>
 </html>

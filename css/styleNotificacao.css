@@ -1,0 +1,86 @@
+* {
+    margin: 2px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif; /* Fonte padrão */
+}
+
+body {
+    padding-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+nav {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.9); 
+    justify-content: space-around; 
+    align-items: center;
+    position: fixed; 
+    bottom: 0;
+    width: 90%;
+    border-radius: 30px;    
+    padding: 10px 0; 
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+    z-index: 10; 
+}
+
+.navlinks {
+    display: flex; 
+    justify-content: space-around; 
+    width: 100%; 
+}
+
+.navlinks li {
+    list-style: none;
+    padding: 0 15px; 
+}
+
+.navlinks li a {
+    text-decoration: none; 
+    color: inherit; 
+    display: flex; 
+    align-items: center; 
+}
+
+.navlinks li ion-icon {
+    font-size: 33px;
+}
+
+.container {
+    margin-top: 20px; /* Espaçamento entre a navbar e o conteúdo */
+    width: 90%; /* Largura da página */
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Espaçamento abaixo do botão de voltar */
+}
+
+.back-button {
+    text-decoration: none;
+    color: #007bff; /* Cor do link */
+    font-size: 18px; /* Tamanho da fonte */
+    display: flex;
+    align-items: center;
+}
+
+.back-button ion-icon {
+    margin-right: 5px; /* Espaço entre ícone e texto */
+}
+
+ul {
+    list-style-type: none; /* Remove marcadores da lista */
+    padding: 0; /* Remove padding padrão */
+}
+
+li {
+    margin-bottom: 15px; /* Espaçamento entre as notificações */
+}
+
+hr {
+    border: 0; /* Remove borda padrão */
+    border-top: 1px solid #ccc; /* Linha separadora */
+}

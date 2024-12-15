@@ -1,6 +1,7 @@
 <?php
 // Conectar ao banco de dados
-include('conexaoBD.php'); // Inclua sua conexão com o banco de dados
+include('conexaoBD.php');
+session_start();
 
 // Captura o ID do imóvel a partir da URL
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -25,11 +26,28 @@ $imagem_principal = !empty($imagens) ? $imagens[0] : 'img/default.png';
 // Processar a coluna 'disponibilidade'
 $disponibilidade = explode(',', $row['disponibilidade']);
 $events = []; // Inicializa o array de eventos
+
 foreach ($disponibilidade as $dia) {
     $events[] = [
-        'start' => trim($dia), // Adiciona cada dia de disponibilidade
-        'end' => trim($dia),   // Define o fim do evento como o mesmo dia
+        'start' => trim($dia),
+        'end' => trim($dia),
         'color' => '#FFCCCC'   // Cor para dias indisponíveis
+    ];
+}
+
+// Busca as reservas aceitas para o espaço
+$queryReservasAceitas = "SELECT data FROM reservas WHERE espaco_id = ? AND status = 'aceita'";
+$stmtReservasAceitas = $conn->prepare($queryReservasAceitas);
+$stmtReservasAceitas->bind_param("i", $id);
+$stmtReservasAceitas->execute();
+$resultReservasAceitas = $stmtReservasAceitas->get_result();
+
+// Adiciona as reservas aceitas ao array de eventos
+while ($rowReserva = $resultReservasAceitas->fetch_assoc()) {
+    $events[] = [
+        'start' => $rowReserva['data'],
+        'end' => $rowReserva['data'],
+        'color' => '#FFFF00'  // Cor para dias reservados (amarelo)
     ];
 }
 ?>
@@ -159,9 +177,11 @@ foreach ($disponibilidade as $dia) {
         .legenda div {
             width: 20px;
             height: 20px;
-            background-color: #FFCCCC;
             margin-right: 10px;
             border-radius: 3px;
+        }
+        .legenda div:first-child {
+            background-color: #FFCCCC; /* Cor para dias indisponíveis */
         }
     </style>
 </head>
@@ -176,36 +196,29 @@ foreach ($disponibilidade as $dia) {
 
         <div class="info-container">
             <span class="descricao"><?php echo htmlspecialchars($row['nome']); ?></span>
-
             <div class="localizacao">
                 <ion-icon name="location-outline"></ion-icon>
                 <?php echo htmlspecialchars($row['localizacao']); ?>
             </div>
-
             <div class="telefone">
                 <ion-icon name="call-outline"></ion-icon>
                 <strong><?php echo htmlspecialchars($row['telefone']); ?></strong>
             </div>
-
             <div class="valor">
                 <ion-icon name="cash-outline"></ion-icon>
                 <strong>R$ <?php echo htmlspecialchars(number_format($row['valor'], 2, ',', '.')); ?></strong>
             </div>
-
             <div class="capacidade">
                 <ion-icon name="people-outline"></ion-icon>
                 <strong>Capacidade: <?php echo htmlspecialchars($row['capacidade']); ?> pessoas</strong>
             </div>
-
             <div class="tipo">
                 <ion-icon name="business-outline"></ion-icon>
                 <strong>Tipo: <?php echo htmlspecialchars($row['tipo']); ?></strong>
             </div>
-
             <div class="regras">
                 <strong>Regras:</strong> <?php echo nl2br(htmlspecialchars($row['regras'])); ?>
             </div>
-
             <div class="descricao" style="color: black; margin-top: 15px;">
                 <p><?php echo nl2br(htmlspecialchars($row['descricao'])); ?></p>
             </div>
@@ -215,6 +228,8 @@ foreach ($disponibilidade as $dia) {
     <div class="legenda">
         <div></div>
         <span>Dias em vermelho estão indisponíveis para locação.</span>
+        <div></div>
+        <span>Dias em amarelo estão reservados.</span>
     </div>
 
     <div id="calendar"></div>
@@ -241,23 +256,59 @@ foreach ($disponibilidade as $dia) {
                     right: 'month,agendaWeek,agendaDay'
                 },
                 editable: false,
-                selectable: false,
+                selectable: true,
                 eventLimit: true,
                 locale: 'pt-br',
                 events: reservedEvents,
                 dayRender: function(date, cell) {
                     var isReserved = reservedEvents.some(function(event) {
-                        return moment(date).isBetween(event.start, event.end, null, '[]'); // Verifica se está entre as reservas
+                        return moment(date).isBetween(event.start, event.end, null, '[]');
                     });
 
                     if (isReserved) {
-                        cell.css("background-color", "#FFCCCC"); // Tom claro para dias indisponíveis
-                        cell.append("<span style='color: red; font-weight: bold;'>Indisponível</span>"); // Mensagem
+                        cell.css("background-color", "#FFFF00"); // Tom claro para dias reservados (amarelo)
+                        cell.append("<span style='color: green; font-weight: bold;'>Reservado</span>");
+                    } else {
+                        var isUnavailable = reservedEvents.some(function(event) {
+                            return moment(date).isBetween(event.start, event.end, null, '[]');
+                        });
+
+                        if (isUnavailable) {
+                            cell.css("background-color", "#FFCCCC"); // Tom claro para dias indisponíveis
+                            cell.append("<span style='color: red; font-weight: bold;'>Indisponível</span>");
+                        }
+                    }
+                },
+                dayClick: function(date, jsEvent, view) {
+                    var formattedDate = moment(date).format('YYYY-MM-DD');
+                    var isReserved = reservedEvents.some(function(event) {
+                        return moment(date).isBetween(event.start, event.end, null, '[]');
+                    });
+
+                    if (isReserved) {
+                        alert('Esse dia está indisponível para locação.');
+                    } else {
+                        if (confirm('Deseja solicitar a reserva para o dia ' + formattedDate + '?')) {
+                            $.ajax({
+                                url: 'solicitarReserva.php',
+                                method: 'POST',
+                                data: {
+                                    data: formattedDate,
+                                    espaco_id: <?php echo $id; ?>
+                                },
+                                success: function(response) {
+                                    alert(response);
+                                },
+                                error: function() {
+                                    alert('Erro ao solicitar a reserva. Tente novamente.');
+                                }
+                            });
+                        }
                     }
                 }
             });
         });
-
+        
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')

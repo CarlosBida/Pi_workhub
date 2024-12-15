@@ -22,14 +22,18 @@ $usuario_nome = $_SESSION['username']; // Obtém o nome do usuário
 </head>
 <body>
     <div class="destaque">
-        <div class="container-sup">
-            <img src="img/Workhub logo.png" alt="LOCAHUB" class="logo">
+    <div class="container-sup">
+        <img src="img/Workhub logo.png" alt="LOCAHUB" class="logo">
             <h3>Olá, </h3>
             <div class="location">
                 <ion-icon name="chevron-down-outline"></ion-icon>
-                <h1><?php echo htmlspecialchars($usuario_nome); ?></h1> <!-- Nome do usuário em vez de Telêmaco Borba -->
-            </div>
+                <h1><?php echo htmlspecialchars($usuario_nome); ?></h1>
+                <div class="notificacao">
+            <a href="notificacoes.php"><ion-icon name="notifications-outline"></ion-icon></a>
         </div>
+            </div>
+        
+    </div>
 
         <div class="busca-site">
             <form action="" method="get">
