@@ -74,9 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("sisssssssssi", $nome, $valor, $localizacao, $descricao, $telefone, $capacidade, $tipo, $amenidades, $regras, json_encode($disponibilidade), $imagens_json, $userId);
 
         if ($stmt->execute()) {
-            $espaco_id = $stmt->insert_id; // Captura o ID do espaço inserido
-            // Redireciona para a página de reserva com o ID do espaço
-            header("Location: reservas.php?espaco_id=$espaco_id&disponibilidade=" . urlencode(json_encode($disponibilidade)));
+            // Mensagem de sucesso
+            $message = "Cadastro realizado com sucesso!";
+            // Redireciona para a página de cadastro com a mensagem de sucesso
+            header("Location: cadastro.php?message=" . urlencode($message));
             exit();
         } else {
             $message = "Erro ao cadastrar: " . $stmt->error;

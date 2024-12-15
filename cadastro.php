@@ -48,7 +48,7 @@
             <select name="tipo" required>
                 <option value="Sala de Reunião">Sala de Reunião</option>
                 <option value="Escritório">Escritório</option>
-                <option value="Auditório">Auditório</option>
+                <option value="Salao">Salao</option>
                 <option value="Estúdio">Estúdio</option>
                 <option value="Coworking">Coworking</option>
             </select>
@@ -62,7 +62,7 @@
             <input type="text" name="regras" placeholder="Não fumar, Horário de silêncio após as 22h">
         </div>
         <div class="form-control">
-            <label class="placeholder">Disponibilidade (selecione as datas disponíveis)</label>
+            <label class="placeholder">Disponibilidade (selecione as datas indisponiveis)</label>
             <input type="text" id="datepicker" name="disponibilidade" readonly required>
         </div>
         <div class="form-control">

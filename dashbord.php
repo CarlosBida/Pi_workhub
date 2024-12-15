@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="home-profissional">
-    <?php
+        <?php
         session_start(); // Inicia a sessão
         if (isset($_GET['message'])) {
             echo '<div class="success-message">' . htmlspecialchars($_GET['message']) . '</div>';
@@ -26,18 +26,18 @@
             die("Acesso negado. Você precisa estar logado.");
         }
 
-       
-    ?>
+        $userId = $_SESSION['user_id']; // Obtém o ID do usuário logado
+        ?>
         <div class="rectangle-7"></div>
         <img class="notebook" src="img/notebook.svg" />
         <img class="subtract" src="img/Subtract.svg" />
         <div class="agenda">
-        <a href="gerenciaReservas.php" style="text-decoration: none; color: inherit;">Solicitações</a>
+            <a href="gerenciaReservas.php" style="text-decoration: none; color: inherit;">Solicitações</a>
         </div>
         <div class="rectangle-8"></div>
         <img class="subtract2" src="img/Subtract.svg" />
         <img class="chart-alt" src="img/Chart_alt.svg" />
-        <div class="title">Solicitações Pendentes</div>
+        <div class="title">Espaços cadastrados:</div>
         <img class="work-removebg-preview-2" src="img/Workhub logo.png" />
     </div>
     <!-- Lista de imóveis -->
@@ -47,7 +47,7 @@
             // Consulta para selecionar os espaços cadastrados pelo usuário
             $sql = "SELECT id, nome, valor, imagens, localizacao, descricao FROM espacos WHERE usuario_id = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $userId);
+            $stmt->bind_param("i", $userId); // Usa o ID do usuário logado
             $stmt->execute();
             $result = $stmt->get_result();
 
